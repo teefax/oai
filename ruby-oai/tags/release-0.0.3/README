@@ -1,0 +1,41 @@
+ruby-oai
+--------
+
+DESCRIPTION
+
+ruby-oai is a Open Archives Protocol for Metadata Harvesting (OAI-PMH) 
+client library for Ruby. If you're not familiar with OAI-PMH it is the 
+most used protocol for sharing metadata between digital library repositories.
+
+The OAI-PMH spec defines six verbs (Identify, ListIdentifiers, ListRecords, 
+GetRecords, ListSets, ListMetadataFormat) which translate into methods you 
+can call on a OAI::Client object.
+
+SYNOPSIS
+
+  # do a ListRecords request and print out the REXML::Element objects
+  # for each record
+
+  client = OAI::Client.new 'http://www.pubmedcentral.gov/oai/oai.cgi'
+  for record in client.list_records 
+    puts record.metadata
+  end
+
+INSTALLATION
+
+  Normally the best way to install oai is from rubyforge using the gem
+  command line tool:
+
+    % gem install oai
+
+  If you're reading this you've presumably got the tarball or zip distribution.
+  So you'll need to:
+
+    % rake package
+    % gem install pkg/oai-x.y.z.gem 
+
+  Where x.y.z is the version of the gem that was generated.
+
+BUGS/SUGGESTIONS
+
+- Ed Summers <ehs@pobox>
