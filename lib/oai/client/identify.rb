@@ -1,14 +1,14 @@
 module OAI
   class IdentifyResponse < Response
     include OAI::XPath
-    attr_accessor :repository_name, :base_url, :protocol, :admin_email, 
+    attr_accessor :repository_name, :base_url, :protocol_version, :admin_email, 
       :earliest_datestamp, :deleted_record, :granularity, :compression
 
     def initialize(doc)
       super doc
       @repository_name = xpath(doc, './/Identify/repositoryName')
       @base_url = xpath(doc, './/Identify/baseURL')
-      @protocol = xpath(doc, './/Identify/protocol')
+      @protocol_version = xpath(doc, './/Identify/protocolVersion')
       @admin_email = xpath(doc, './/Identify/adminEmail')
       @earliest_datestamp = xpath(doc, './/Identify/earliestDatestamp')
       @deleted_record = xpath(doc, './/Identify/deletedRecord')
