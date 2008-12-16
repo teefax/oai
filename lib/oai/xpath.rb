@@ -48,12 +48,12 @@ module OAI
     # figure out what sort of object we should do xpath on
     def parser_type(x)
       case x.class.to_s
-      when 'XML::Document'
+      when 'LibXML::XML::Document'
         return 'libxml'
-      when 'XML::Node'
+      when 'LibXML::XML::Node'
         return 'libxml'
-      when 'XML::Node::Set'
-	return 'libxml'
+      when 'LibXML::XML::Node::Set'
+	      return 'libxml'
       when 'REXML::Element'
         return 'rexml'
       when 'REXML::Document'
