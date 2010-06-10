@@ -67,6 +67,11 @@ module OAI
     # back XML::Node objects
     #
     #   client = OAI::Client.new 'http://example.com', :parser => 'libxml'
+    # 
+    # If you need a longer timeout for the http request, pass a value in seconds
+    # as the timeout option
+    # 
+    #   client = OAI::Client.new 'http://example.com', :timeout => 60*6
     #
     # === HIGH PERFORMANCE
     #
@@ -78,6 +83,7 @@ module OAI
       @debug = options.fetch(:debug, false)
       @parser = options.fetch(:parser, 'rexml')
       @follow_redirects = options.fetch(:redirects, true)
+      @timeout = options.fetch(:timeout, 60)
       
       # load appropriate parser
       case @parser
@@ -207,7 +213,13 @@ module OAI
 
     # Do the actual HTTP get, following any temporary redirects
     def get(uri)
-      response = Net::HTTP.get_response(uri)
+      # response = Net::HTTP.get_response(uri)
+      url = URI.parse(uri.to_s)
+      req = Net::HTTP::Get.new(url.request_uri)
+      response = Net::HTTP.start(url.host, url.port) {|http|
+        http.read_timeout = @timeout
+        http.request(req)
+      }
       case response
       when Net::HTTPSuccess
         return response.body
